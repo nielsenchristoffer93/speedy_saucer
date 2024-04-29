@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4khtdyv52l8e"]
+
+[ext_resource type="Script" path="res://level.gd" id="1_0qcmu"]
+[ext_resource type="Texture2D" uid="uid://bjlhen7jdovnc" path="res://purple.png" id="1_ds6jw"]
+[ext_resource type="PackedScene" uid="uid://b05axgk54yxtd" path="res://player.tscn" id="2_803y0"]
+[ext_resource type="PackedScene" uid="uid://deqem63vcre4e" path="res://maze.tscn" id="3_ysmqb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_y75to"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ffm5"]
+font_size = 24
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_0qcmu")
+
+[node name="Graphics" type="Node" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Graphics"]
+layer = -10
+
+[node name="Background" type="TextureRect" parent="Graphics/CanvasLayer"]
+z_index = -100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ds6jw")
+stretch_mode = 1
+
+[node name="StartLabel" type="Label" parent="Graphics"]
+offset_left = 603.0
+offset_top = 244.0
+offset_right = 698.0
+offset_bottom = 289.0
+text = "START"
+label_settings = SubResource("LabelSettings_y75to")
+
+[node name="EndLabel" type="Label" parent="Graphics"]
+offset_left = 1173.0
+offset_top = 745.0
+offset_right = 1268.0
+offset_bottom = 790.0
+text = "END"
+label_settings = SubResource("LabelSettings_y75to")
+
+[node name="RulesLabel" type="Label" parent="Graphics"]
+offset_left = 61.0
+offset_top = 211.0
+offset_right = 466.0
+offset_bottom = 467.0
+scale = Vector2(0.995798, 1.00776)
+text = "Rules:
+- Use arrow keys or WASD 
+to move
+- Go from the start to the end
+- You will go back to the 
+start if you go outside of the
+maze!"
+label_settings = SubResource("LabelSettings_8ffm5")
+
+[node name="Player" parent="." instance=ExtResource("2_803y0")]
+position = Vector2(656, 362)
+
+[node name="Maze" parent="." instance=ExtResource("3_ysmqb")]
+position = Vector2(654, 359)
+scale = Vector2(5.22488, 6.05497)
+
+[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
